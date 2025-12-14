@@ -1,0 +1,4 @@
+com.springbaseproject.sharedstarter.autoconfiguration.AlgorithmsKeysConfig
+com.springbaseproject.sharedstarter.autoconfiguration.ApplicationAutoConfig
+com.springbaseproject.sharedstarter.autoconfiguration.SecurityAutoConfig
+com.springbaseproject.sharedstarter.autoconfiguration.SharedAutoConfig

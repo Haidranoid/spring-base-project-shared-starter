@@ -1,0 +1,85 @@
+package com.springbaseproject.sharedstarter.entities;
+
+import com.springbaseproject.sharedstarter.constants.Roles;
+import jakarta.persistence.*;
+import lombok.*;
+import lombok.experimental.SuperBuilder;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
+
+import java.util.Collection;
+
+@Entity
+@Getter
+@Setter
+@NoArgsConstructor // required by JPA
+@Table(name = "accounts")
+@SuperBuilder
+public class Account implements UserDetails {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Setter(AccessLevel.NONE)
+    private Long id;
+
+    @NonNull
+    @Column(unique = true, nullable = false)
+    @Setter(AccessLevel.NONE)
+    private String username;
+
+    @NonNull
+    private String firstName;
+
+    @NonNull
+    private String lastName;
+
+    @NonNull
+    @Column(unique = true, nullable = false)
+    private String email;
+
+    @NonNull
+    private String password;
+
+    @NonNull
+    @Enumerated(EnumType.STRING)
+    private Roles role;
+
+    @Builder.Default
+    private boolean enabled = true;
+    @Builder.Default
+    private boolean accountNonLocked = true;
+    @Builder.Default
+    private boolean accountNonExpired = true;
+    @Builder.Default
+    private boolean credentialsNonExpired = true;
+
+    @Override
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        return role.getAuthorities();
+    }
+
+    @Override
+    public boolean isAccountNonExpired() {
+        return accountNonExpired;
+    }
+
+    @Override
+    public boolean isAccountNonLocked() {
+        return accountNonLocked;
+    }
+
+    @Override
+    public boolean isCredentialsNonExpired() {
+        return credentialsNonExpired;
+    }
+
+    @Override
+    public boolean isEnabled() {
+        return enabled;
+    }
+
+    @Override
+    public String toString() {
+        return "Account{}";
+    }
+}
