@@ -6,11 +6,11 @@ import com.springbaseproject.sharedstarter.security.JwtAuthoritiesConverter;
 import com.springbaseproject.sharedstarter.services.JwtService;
 import com.springbaseproject.sharedstarter.utils.SecurityUtils;
 import io.jsonwebtoken.security.SignatureAlgorithm;
-import jakarta.annotation.Nullable;
 import lombok.RequiredArgsConstructor;
 import org.springframework.boot.autoconfigure.AutoConfiguration;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
+import org.springframework.lang.Nullable;
 import org.springframework.security.oauth2.jwt.JwtDecoder;
 import org.springframework.security.oauth2.jwt.NimbusJwtDecoder;
 
