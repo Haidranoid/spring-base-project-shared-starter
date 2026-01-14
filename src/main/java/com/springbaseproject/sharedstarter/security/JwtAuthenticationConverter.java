@@ -1,36 +1,30 @@
 package com.springbaseproject.sharedstarter.security;
 
-import com.springbaseproject.sharedstarter.services.JwtService;
-import io.jsonwebtoken.Claims;
 import org.springframework.core.convert.converter.Converter;
 import org.springframework.security.authentication.AbstractAuthenticationToken;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.oauth2.jwt.Jwt;
+import org.springframework.security.oauth2.server.resource.authentication.JwtAuthenticationToken;
+import org.springframework.security.oauth2.server.resource.authentication.JwtGrantedAuthoritiesConverter;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
-public class JwtAuthoritiesConverter implements Converter<Jwt, AbstractAuthenticationToken>{
+public class JwtAuthenticationConverter implements Converter<Jwt, AbstractAuthenticationToken>{
 
-    private final JwtService jwtService;
-
-    public JwtAuthoritiesConverter(JwtService jwtService) {
-        this.jwtService = jwtService;
-    }
+    private final JwtGrantedAuthoritiesConverter scopesConverter = new JwtGrantedAuthoritiesConverter();
 
     @Override
     public AbstractAuthenticationToken convert(Jwt jwt) {
-        Claims claims = jwtService.decode(jwt.getTokenValue());
+        Collection<GrantedAuthority> authorities = new ArrayList<>();
 
-        String username = claims.getSubject();
+        // OAuth2-compatible scopes
+        authorities.addAll(scopesConverter.convert(jwt));
 
-        List<String> roles = (List<String>) claims.get("roles", List.class);
-        List<String> scopes = (List<String>) claims.get("scope", List.class);
-
-        List<GrantedAuthority> authorities = new ArrayList<>();
-
+        // Roles
+        List<String> roles = jwt.getClaimAsStringList("roles");
         if (roles != null) {
             authorities.addAll(
                     roles.stream()
@@ -39,14 +33,19 @@ public class JwtAuthoritiesConverter implements Converter<Jwt, AbstractAuthentic
             );
         }
 
+        // Authorities
+        /*
+        List<String> scopes = jwt.getClaimAsStringList("scope");
         if (scopes != null) {
             authorities.addAll(
                     scopes.stream()
+                            //.map(scope -> new SimpleGrantedAuthority("SCOPE_" + scope))
                             .map(SimpleGrantedAuthority::new)
                             .toList()
             );
         }
+        */
 
-        return new UsernamePasswordAuthenticationToken(username, null, authorities);
+        return new JwtAuthenticationToken(jwt, authorities, jwt.getSubject());
     }
 }

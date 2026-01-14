@@ -13,7 +13,6 @@ import org.springframework.web.client.RestTemplate;
 @EnableConfigurationProperties({JwtProperties.class, ApplicationProperties.class})
 public class SharedAutoConfig {
 
-
     @Bean
     public RestTemplate restTemplate() {
         return new RestTemplate();
