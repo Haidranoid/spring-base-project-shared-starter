@@ -43,9 +43,10 @@ public class SecurityAutoConfig {
     public JwtDecoder jwtDecoder(@Nullable PublicKey publicKey) {
         NimbusJwtDecoder decoder = NimbusJwtDecoder.withPublicKey((RSAPublicKey) publicKey).build();
 
+        /*
         OAuth2TokenValidator<Jwt> validator = JwtValidators.createDefaultWithIssuer(jwtProperties.issuer());
-
         decoder.setJwtValidator(validator);
+        */
         return decoder;
     }
 
