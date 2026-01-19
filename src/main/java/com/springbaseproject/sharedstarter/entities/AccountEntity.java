@@ -15,7 +15,7 @@ import java.util.Collection;
 @NoArgsConstructor // required by JPA
 @Table(name = "accounts")
 @SuperBuilder
-public class Account implements UserDetails {
+public class AccountEntity implements UserDetails {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

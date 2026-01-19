@@ -13,5 +13,4 @@ public record JwtProperties(
          Long refreshTokenExpiration,
          String issuer,
          List<String>audience
-) {
-}
+) {}
