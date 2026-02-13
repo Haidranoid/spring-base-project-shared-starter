@@ -2,18 +2,16 @@ package com.springbaseproject.sharedstarter.entities;
 
 import com.springbaseproject.sharedstarter.constants.TokenTypes;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
-@Data
-@Builder
+@Entity
+@Getter
+@Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@Entity
+@Builder
 @Table(name = "tokens")
-public class Token {
+public class TokenEntity {
   @Id
   @GeneratedValue
   private Long id;
