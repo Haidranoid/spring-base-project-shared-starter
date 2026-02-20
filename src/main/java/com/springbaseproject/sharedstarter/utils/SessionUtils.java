@@ -1,11 +1,11 @@
-package com.springbaseproject.sharedstarter.security;
+package com.springbaseproject.sharedstarter.utils;
 
 import org.springframework.lang.Nullable;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.oauth2.jwt.Jwt;
 
-public class JwtAuthenticationService {
+public class SessionUtils {
 
     @Nullable
     public Jwt getCurrentJwt() {

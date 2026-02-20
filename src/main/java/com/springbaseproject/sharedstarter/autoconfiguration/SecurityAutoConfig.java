@@ -1,9 +1,8 @@
 package com.springbaseproject.sharedstarter.autoconfiguration;
 
-import com.springbaseproject.sharedstarter.properties.ApplicationProperties;
 import com.springbaseproject.sharedstarter.properties.JwtProperties;
 import com.springbaseproject.sharedstarter.security.JwtAuthenticationConverter;
-import com.springbaseproject.sharedstarter.security.JwtAuthenticationService;
+import com.springbaseproject.sharedstarter.utils.SessionUtils;
 import lombok.RequiredArgsConstructor;
 import org.springframework.boot.autoconfigure.AutoConfiguration;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
@@ -41,7 +40,7 @@ public class SecurityAutoConfig {
     }
 
     @Bean
-    public JwtAuthenticationService jwtAuthenticationService() {
-        return new JwtAuthenticationService();
+    public SessionUtils sessionUtils() {
+        return new SessionUtils();
     }
 }
