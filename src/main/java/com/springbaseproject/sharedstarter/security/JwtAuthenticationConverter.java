@@ -1,5 +1,6 @@
 package com.springbaseproject.sharedstarter.security;
 
+import lombok.NonNull;
 import org.springframework.core.convert.converter.Converter;
 import org.springframework.security.authentication.AbstractAuthenticationToken;
 import org.springframework.security.core.GrantedAuthority;
@@ -17,10 +18,10 @@ public class JwtAuthenticationConverter implements Converter<Jwt, AbstractAuthen
     private final JwtGrantedAuthoritiesConverter scopesConverter = new JwtGrantedAuthoritiesConverter();
 
     @Override
-    public AbstractAuthenticationToken convert(Jwt jwt) {
+    public AbstractAuthenticationToken convert(@NonNull Jwt jwt) {
         Collection<GrantedAuthority> authorities = new ArrayList<>();
 
-        // OAuth2-compatible scopes
+        // Scopes (OAuth2 standard)
         authorities.addAll(scopesConverter.convert(jwt));
 
         // Roles
@@ -32,19 +33,6 @@ public class JwtAuthenticationConverter implements Converter<Jwt, AbstractAuthen
                             .toList()
             );
         }
-
-        // Authorities
-        /*
-        List<String> scopes = jwt.getClaimAsStringList("scope");
-        if (scopes != null) {
-            authorities.addAll(
-                    scopes.stream()
-                            //.map(scope -> new SimpleGrantedAuthority("SCOPE_" + scope))
-                            .map(SimpleGrantedAuthority::new)
-                            .toList()
-            );
-        }
-        */
 
         return new JwtAuthenticationToken(jwt, authorities, jwt.getSubject());
     }
